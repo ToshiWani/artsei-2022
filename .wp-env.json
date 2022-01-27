@@ -2,7 +2,8 @@
     "plugins" : [
         "https://downloads.wordpress.org/plugin/wp-multibyte-patch.latest-stable.zip",
         "https://downloads.wordpress.org/plugin/advanced-custom-fields.latest-stable.zip",
-        "https://downloads.wordpress.org/plugin/folders.latest-stable.zip"
+        "https://downloads.wordpress.org/plugin/folders.latest-stable.zip",
+        "https://downloads.wordpress.org/plugin/all-in-one-wp-migration.latest-stable.zip"
     ],
     "themes":[
         "./artsei-theme"
