@@ -13,41 +13,41 @@
 
         <?php
             global $wpdb;
-            $query = "select t.name, p.ID
-                        from wp_term_taxonomy tt
-                        inner join wp_terms t on t.term_id = tt.term_id
-                        inner join `wp_term_relationships` tr on tr.term_taxonomy_id = tt.term_taxonomy_id
-                        inner join wp_posts p on p.`ID` = tr.object_id
-                        where tt.`taxonomy` = 'media_folder' and t.name not like '\_%'";
+            $query = "select t.name as term_name, p.ID as post_id, pm.meta_value as priority
+                from wp_term_taxonomy tt
+                inner join wp_terms t on t.term_id = tt.term_id
+                inner join `wp_term_relationships` tr on tr.term_taxonomy_id = tt.term_taxonomy_id
+                inner join wp_posts p on p.`ID` = tr.object_id
+                left join wp_postmeta pm on pm.post_id = p.ID and pm.meta_key = 'priority'
+                where tt.`taxonomy` = 'media_folder' and t.name not like '\_%'
+                order by pm.meta_value desc";
 
             $results = $wpdb->get_results($query);
-            $image_list = array();
-
-            foreach ($results as $row) {
-                $image_list[$row->name][] = $row->ID;
+            $by_category = [];
+            foreach($results as $row) {
+                $by_category[$row->term_name][] = $row;
             }
             ?>
             <!-- render all images -->
             <li>
                 <h3>全て表示</h3>
                 <div class="gallery">
-                    <?php foreach ($image_list as $category_name => $img_id_list) :?>
-                        <?php foreach ($img_id_list as $imgid) : ?>
-                            <a href="<?php echo wp_get_attachment_image_url($imgid, 'large') ?>">
-                                <img loading="lazy" src="<?php echo wp_get_attachment_image_url($imgid, 'medium_large') ?>">
-                            </a>
-                        <?php endforeach; ?>
+                    <?php foreach ($results as $row) :?>
+                        <?php echo $row->priority; ?>
+                        <a href="<?php echo wp_get_attachment_image_url($row->post_id, 'large') ?>">
+                            <img loading="lazy" src="<?php echo wp_get_attachment_image_url($row->post_id, 'medium_large') ?>">
+                        </a>
                     <?php endforeach; ?>
                 </div>
             </li>
             <!-- render images by category -->
-            <?php foreach ($image_list as $category_name => $img_id_list) : ?>
+            <?php foreach ($by_category as $category_name => $img_list) : ?>
                 <li>
                     <h3><?php echo $category_name; ?></h3>
                     <div class="gallery">
-                        <?php foreach ($img_id_list as $imgid) : ?>
-                            <a href="<?php echo wp_get_attachment_image_url($imgid, 'large') ?>">
-                                <img loading="lazy" src="<?php echo wp_get_attachment_image_url($imgid, 'medium_large') ?>">
+                        <?php foreach ($img_list as $row) : ?>
+                            <a href="<?php echo wp_get_attachment_image_url($row->post_id, 'large') ?>">
+                                <img loading="lazy" src="<?php echo wp_get_attachment_image_url($row->post_id, 'medium_large') ?>">
                             </a>
                         <?php endforeach; ?>
                     </div>
