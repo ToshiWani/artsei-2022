@@ -57,12 +57,14 @@ add_action( 'wp_enqueue_scripts', function($hook){
     //  fetch list of banner images
 
     global $wpdb;
-    $query = "select p.ID as post_id
-    from wp_term_taxonomy tt
-    inner join wp_terms t on t.term_id = tt.term_id
-    inner join `wp_term_relationships` tr on tr.term_taxonomy_id = tt.term_taxonomy_id
-    inner join wp_posts p on p.`ID` = tr.object_id
-    where tt.`taxonomy` = 'media_folder' and t.name = '_top_page';";
+    $query = "select p.ID as post_id, pm.meta_value
+        from wp_term_taxonomy tt
+        inner join wp_terms t on t.term_id = tt.term_id
+        inner join `wp_term_relationships` tr on tr.term_taxonomy_id = tt.term_taxonomy_id
+        inner join wp_posts p on p.`ID` = tr.object_id
+        left join wp_postmeta pm on pm.post_id = p.ID and pm.meta_key = 'priority'
+        where tt.`taxonomy` = 'media_folder' and t.name = '_top_page'
+        order by pm.meta_value desc";
 
     $results = $wpdb->get_results($query);
 
