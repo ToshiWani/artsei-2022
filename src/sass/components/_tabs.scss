@@ -12,7 +12,7 @@
 		> .titles {
 			@include vendor('display', 'flex');
 			@include vendor('flex-wrap', 'wrap');
-			@include vendor('justify-content', 'flex-start');
+			@include vendor('justify-content', 'space-between');
 			@include vendor('user-select', 'none');
 			list-style: none;
 			margin: 0 0 _size(element-margin) 0;
