@@ -40,8 +40,11 @@ namespace Artsei.DataMigration
 
         static Task Main(string[] args)
         {
+            int categoryId = 5;
+
             string wpUserName = Environment.GetEnvironmentVariable("WP_USERNAME");
             string wpPassword = Environment.GetEnvironmentVariable("WP_PASSWORD");
+            string wpApiEndpoint = Environment.GetEnvironmentVariable("WP_APIENDPOINT");
 
             if (string.IsNullOrWhiteSpace(wpUserName))
             {
@@ -53,10 +56,16 @@ namespace Artsei.DataMigration
                 throw new InvalidOperationException("wpPassword must have value");
             }
 
-            return Run(wpUserName, wpPassword);
+            if (string.IsNullOrWhiteSpace(wpApiEndpoint))
+            {
+                throw new InvalidOperationException("wpApiEndpoint must have value");
+            }
+
+
+            return Run(wpUserName, wpPassword, new Uri(wpApiEndpoint), categoryId);
         }
 
-        static async Task Run(string username, string password)
+        static async Task Run(string username, string password, Uri apiEndpoint, int categoryId)
         {
             //  enable Shift-JIS encoding
 
@@ -128,6 +137,7 @@ namespace Artsei.DataMigration
                     var nodes = htmlDoc.DocumentNode.DescendantsAndSelf();
                     var sb = new StringBuilder();
                     string title = null;
+                    string summary = null;
 
                     foreach (var n in nodes)
                     {
@@ -151,6 +161,15 @@ namespace Artsei.DataMigration
                                 break;
 
                             case "p":
+                                if(string.IsNullOrWhiteSpace(summary))
+                                {
+                                    summary = text;
+                                }
+                                sb.Append($"<!-- wp:paragraph --><{tag}>");
+                                sb.Append(text);
+                                sb.Append($"</{tag}><!-- /wp:paragraph -->");
+                                break;
+
                             case "div":
                             case "span":
                                 sb.Append($"<!-- wp:paragraph --><{tag}>");
@@ -212,16 +231,16 @@ namespace Artsei.DataMigration
                         day < 1 ? 1 : day
                     );
 
-                    await PostAsync(client, new Uri("http://52.55.30.102/wp-json/wp/v2/posts"), username, password, new
+                    await PostAsync(client, apiEndpoint, username, password, new
                     {
                         status = "publish",
                         title,
                         content,
-                        excerpt = "<p>api test excerpt</p>",
+                        excerpt = summary,
                         format = "standard",
                         comment_status = "closed",
                         date = date.ToString("o"),
-                        categories = new[] { 10 },
+                        categories = new[] { categoryId },
                     });
 
                     Console.WriteLine("====== SUCCESS POSTING =======");
@@ -247,6 +266,9 @@ namespace Artsei.DataMigration
                     string errorMessage = await response.Content.ReadAsStringAsync();
                     Console.WriteLine($"Failed to post the article!");
                     Console.WriteLine(errorMessage);
+                    Console.WriteLine($"Press any key to continue...");
+
+                    Console.ReadKey();
                 }
             }
         }
