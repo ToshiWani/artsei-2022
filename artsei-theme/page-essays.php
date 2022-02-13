@@ -36,18 +36,14 @@ get_header();?>
             if($results) {
                 $post_rows = array_chunk($results, 4);
             }
-
-            // echo '<pre>'; print_r($post_rows); echo '</pre>';
         ?>
 
         <?php if ($post_rows): ?>
             <?php foreach($post_rows as $row): ?>
-                <div class="row">
+                <div class="row aln-center">
                     <?php foreach($row as $col): ?>
-                        <div class="col-3 col-6-xsmall box">
-                            <div style="text-align: center;">
-                                <a href="<?php echo get_permalink($col->post_id); ?>"><?php echo $col->post_title ?></a>
-                            </div>
+                        <div class="col-3 col-6-small col-12-xsmall" style="padding: 0.512rem 0.64rem 0.512rem;">
+                            <a class="button fit" style="cursor: pointer;" href="<?php echo get_permalink($col->post_id); ?>"><?php echo $col->post_title ?></a>
                         </div>
                     <?php endforeach; ?>
                 </div>
