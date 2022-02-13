@@ -46,7 +46,7 @@ get_header();?>
 
         <?php if ($post_list) : ?>
             <?php foreach($post_list as $year => $posts_by_year) : ?>
-                <h2><?php echo $year; ?>年</h2>
+                <h2 id="<?php echo $year; ?>" style="padding-top: 6rem; margin-top: -6rem;"><?php echo $year; ?>年</h2>
                 <?php $row_list = array_chunk($posts_by_year, 4); ?>
                 <?php foreach ($row_list as $row) : ?>
                     <?php $row = array_pad($row, 4, false); ?>

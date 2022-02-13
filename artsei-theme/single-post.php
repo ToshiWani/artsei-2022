@@ -25,7 +25,9 @@ get_header();?>
         <?php the_content(); ?>
 
         <?php if (in_category("essay")) : ?>
-            <a class="button next" style="cursor: pointer;" href="<?php echo get_permalink( get_page_by_path( 'essays' ) ) ?>">
+            <a class="button next" 
+                style="cursor: pointer;" 
+                href="<?php echo rtrim(get_permalink( get_page_by_path( 'essays' ) ), '/') . '#' . get_the_date('Y'); ?>">
                 一覧へ戻る
             </a>
         <?php endif; ?>
