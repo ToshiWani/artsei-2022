@@ -31,10 +31,26 @@
 				<?php endif; ?>
 			</div>
 			<ul class="contact-icons">
-				<li><a href="#" class="icon brands alt fa-twitter"><span class="label">twitter.com/untitled</span></a></li>
-				<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">facebook.com/untitled</span></a></li>
-				<li><a href="#" class="icon brands alt fa-instagram"><span class="label">instagram.com/untitled</span></a></li>
-				<li><a href="#" class="icon solid alt fa-envelope"><span class="label">contact@untitled.tld</span></a></li>
+				<li>
+					<a href="https://twitter.com/sei_19" class="icon brands alt fa-twitter">
+						<span class="label">@sei_19</span>
+					</a>
+				</li>
+				<li>
+					<a href="https://www.facebook.com/sei.senkoji" class="icon brands alt fa-facebook-f">
+						<span class="label">@sei.senkoji</span>
+					</a>
+				</li>
+				<li>
+					<a href="https://www.youtube.com/user/seisenchin" class="icon brands alt fa-youtube">
+						<span class="label">@seisenchin</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" class="icon solid alt fa-envelope">
+						<span class="label"></span>
+					</a>
+				</li>
 			</ul>
 		</div>
 	</div>
