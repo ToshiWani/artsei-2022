@@ -47,8 +47,8 @@
 					</a>
 				</li>
 				<li>
-					<a href="#" class="icon solid alt fa-envelope">
-						<span class="label"></span>
+					<a href="<?php echo get_permalink( get_page_by_path( 'contact' ) ) ?>" class="icon solid alt fa-envelope">
+						<span class="label">お問合せフォーム</span>
 					</a>
 				</li>
 			</ul>
