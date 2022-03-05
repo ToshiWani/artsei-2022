@@ -37,7 +37,7 @@
 			margin: 0 auto;
 			padding-bottom: 3rem;
 			position: relative;
-			text-align-last: justify;
+			text-align-last: left;
 			text-align: justify;
 			opacity: 0.95;
 		}
@@ -150,8 +150,8 @@
 			h1 {
 				font-size: 4rem;
 				padding-bottom: 3rem;
-				//text-align-last: left;
-				//text-align: left;
+				text-align-last: left;
+				text-align: justify;
 			}
 
 			.content {
@@ -169,8 +169,8 @@
 			h1 {
 				font-size: 3rem;
 				padding-bottom: 3rem;
-				text-align-last: center;
-				text-align: center;
+				text-align-last: left;
+				text-align: justify;
 			}
 
 			.content {
@@ -226,8 +226,8 @@
 
 			h1 {
 				padding-bottom: 2rem;
-				text-align-last: center;
-				text-align: center;
+				text-align-last: left;
+				text-align: justify;
 			}
 
 			.content {
